@@ -11,7 +11,7 @@ print-git-branch() {
 }
 
 function greet() {
-  fortune | cowthink -f `ls /usr/share/cowsay/cows | shuf -n 1` | lolcat
+  fortune | cowthink -f `ls /usr/share/cowsay/cows | rg -v cupcake | shuf -n 1` | lolcat
 }
 greet
 

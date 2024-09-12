@@ -68,6 +68,10 @@ alias gcam='git commit -a -m'
 export FZF_DEFAULT_COMMAND="rg --files"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
+## Emacs
+alias emacs="emacs -nw"
+alias magit="emacs --eval '(magit-status)'"
+
 ## Python
 export PYTHONDONTWRITEBYTECODE=1
 alias pip="pip --disable-pip-version-check --require-virtualenv"

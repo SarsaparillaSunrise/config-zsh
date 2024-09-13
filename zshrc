@@ -29,6 +29,31 @@ $(print '%{\e[1;31m%}')\$(print-git-branch)\
 $(print '%{\e[0m%}') \
 "
 
+# http://www.zsh.org/mla/workers/1996/msg00615.html
+HISTSIZE=21000
+SAVEHIST=20000
+mkdir -p ~/.config/zsh
+touch    ~/.config/zsh/history
+HISTFILE=~/.config/zsh/history
+
+# Make history instantly available in sibling shells
+setopt share_history  # TODO: See if append_history or inc_append_history are preferable
+
+# Remove unnecessary spaces in shell commands before saving
+setopt HIST_REDUCE_BLANKS
+
+# Prevent commands from entering history when preceded by a space
+setopt hist_ignore_space
+
+# Ignore "# comments" typed or pasted into an interactive shell
+setopt interactivecomments
+
+# Don't limit `history` output to 16 lines
+alias history="fc -l 1"
+
+# Exclude `history` from shell history
+setopt HIST_NO_STORE
+
 # Need to be in a comma locale for sort -n to properly sort numbers with commas
 export LANG=en_NZ.UTF-8
 
@@ -88,7 +113,7 @@ alias gcam='git commit -a -m'
 
 ### Application Config:
 
-## FZF:
+## FZF
 [ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 

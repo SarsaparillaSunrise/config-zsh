@@ -1,3 +1,6 @@
+#!/bin/zsh
+# This is meant to be sourced; shebang line is for editors (bat, mostly)
+
 ### Helper Functions:
 
 fast-cat() {
@@ -14,6 +17,11 @@ function greet() {
   fortune | cowthink -f `ls /usr/share/cowsay/cows | rg -v cupcake | shuf -n 1` | lolcat
 }
 greet
+
+# Don't let crashed Xorg sessions leave us at an unlocked text-mode VT
+startx() {
+  exec command startx "$@"
+}
 
 
 ### System-wide Environment:
@@ -99,6 +107,18 @@ _comp_options+=(globdots)
 
 
 ### System Aliases:
+
+alias mv="mv -i"  # prompt before overwrite
+alias rm="rm -I"  # prompt if recursive or more than 3 files
+# LC_COLLATE=C fixes the sort order of dotfiles (they should appear before any non-dotfiles.)
+# --block-size=\'1 shows commas at thousands places in file sizes
+# -A / --almost-all shows hidden files except '.' and '..'
+# -F / --classify appends indicator (one of */=>@|) to entries
+# --quoting-style=literal to avoid 'quotes' in filenames with spaces
+alias ls="LC_COLLATE=C ls --block-size=\'1 -A --color=auto -F --time-style=long-iso --quoting-style=literal"
+alias ll='ls -l'  # list all files, sorted alphabetically
+alias grep='grep --color=auto'
+alias rg='rg --hidden'  # files that start with a dot are just as good
 
 alias gpr='git pull --rebase'
 alias gb='git branch'

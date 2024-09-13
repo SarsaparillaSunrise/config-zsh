@@ -28,7 +28,6 @@ startx() {
 
 setopt promptsubst # needed for \$ evaluation
 
-
 # PS1=(BG_JOB_COUNT>0)PWD:GIT_BRANCH
 PS1="\
 $(print '%{\e[1;31m%}')%(1j.(%j) .)\
@@ -72,7 +71,7 @@ bindkey -e  # Use emacs keybindings even if EDITOR is set to vi
 # -M / --LONG-PROMPT       - Show line position at the bottom
 # -x4                      - Set tab stops to multiples of 4
 # -R / --RAW-CONTROL-CHARS - Show ANSI color escapes in raw form.  We use this
-#                            with `git log` and `paged-with-color`.
+#                            with `git log`.
 # -X / --no-init           - Behave like `cat` if output is fewer than one screen
 # -F / --quit-if-one-screen
 export LESS="-IMx4RXF"

@@ -152,7 +152,7 @@ alias pip="pip --disable-pip-version-check --require-virtualenv"
 export ERL_AFLAGS="-kernel shell_history enabled"
 
 ## Rust
-PATH="$HOME/cargo/bin:$PATH"
+PATH="$HOME/.cargo/bin:$PATH"
 
 ## Javascript
 export PNPM_HOME="$HOME/.local/share/pnpm"

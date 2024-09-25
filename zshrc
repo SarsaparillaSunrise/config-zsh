@@ -129,6 +129,7 @@ alias gc='git commit'
 alias gca='git commit -a'
 alias gcam='git commit -a -m'
 
+alias music="cd /mnt/jimmy/music"
 
 ### Application Config:
 

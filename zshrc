@@ -1,40 +1,7 @@
-#!/bin/zsh
-# This is meant to be sourced; shebang line is for editors (bat, mostly)
-
-### Helper Functions:
-
-fast-cat() {
-  echo -E "$(< $1)"
-}
-
-print-git-branch() {
-  if [[ -f ".git/HEAD" ]]; then
-    echo -E ":${$(fast-cat .git/HEAD)#ref: refs/heads/}"
-  fi
-}
-
-function greet() {
-  fortune | cowthink -f `ls /usr/share/cowsay/cows | rg -v cupcake | shuf -n 1` | lolcat
-}
-greet
-
-# Don't let crashed Xorg sessions leave us at an unlocked text-mode VT
-startx() {
-  exec command startx "$@"
-}
-
-
 ### System-wide Environment:
 
-setopt promptsubst # needed for \$ evaluation
-
-# PS1=(BG_JOB_COUNT>0)PWD:GIT_BRANCH
-PS1="\
-$(print '%{\e[1;31m%}')%(1j.(%j) .)\
-$(print '%{\e[0;36m%}')%d\
-$(print '%{\e[1;31m%}')\$(print-git-branch)\
-$(print '%{\e[0m%}') \
-"
+# PS1: (BG_JOB_COUNT>0)PWD
+PROMPT='%(1j.%F{red}(%j)%f .)%F{yellow}%~%f %F{default}$ '
 
 # http://www.zsh.org/mla/workers/1996/msg00615.html
 HISTSIZE=21000
@@ -64,8 +31,7 @@ setopt HIST_NO_STORE
 # Need to be in a comma locale for sort -n to properly sort numbers with commas
 export LANG=en_NZ.UTF-8
 
-export PATH=$PATH:$HOME/.local/bin  # FHS executables, mostly Python
-export EDITOR=nvim
+export EDITOR=vim
 bindkey -e  # Use emacs keybindings even if EDITOR is set to vi
 # -I / --IGNORE-CASE       - Make search ignore case, even if the pattern contains uppercase letters
 # -M / --LONG-PROMPT       - Show line position at the bottom
@@ -117,48 +83,13 @@ alias rm="rm -I"  # prompt if recursive or more than 3 files
 alias ls="LC_COLLATE=C ls --block-size=\'1 -A --color=auto -F --time-style=long-iso --quoting-style=literal"
 alias ll='ls -l'  # list all files, sorted alphabetically
 alias grep='grep --color=auto'
-alias rg='rg --hidden'  # files that start with a dot are just as good
+alias rg='grep'  # No ripgrep on target machine
 
-alias gpr='git pull --rebase'
-alias gb='git branch'
-alias aggro='git gc --aggressive'
 alias gd='git diff'
-alias gbsu='git branch --set-upstream'
 alias gs='git status'
-alias gc='git commit'
-alias gca='git commit -a'
-alias gcam='git commit -a -m'
-
-alias music="cd /mnt/jimmy/music"
 
 ### Application Config:
-
-## FZF
-[ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-export FZF_DEFAULT_COMMAND="rg --files"
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-
-## Emacs
-alias emacs="emacs -nw"
-alias magit="emacs --eval '(magit-status)'"
 
 ## Python
 export PYTHONDONTWRITEBYTECODE=1
 alias pip="pip --disable-pip-version-check --require-virtualenv"
-
-## Elixir
-export ERL_AFLAGS="-kernel shell_history enabled"
-
-## Rust
-PATH="$HOME/.cargo/bin:$PATH"
-
-## Javascript
-export PNPM_HOME="$HOME/.local/share/pnpm"
-export PATH="$PNPM_HOME:$PATH"
-
-## Start X server on login from TTY1:
-if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
-  startx
-fi

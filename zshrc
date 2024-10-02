@@ -145,6 +145,9 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 alias emacs="emacs -nw"
 alias magit="emacs --eval '(magit-status)'"
 
+## MPV:
+alias mpv="mpv --input-ipc-server=/tmp/mpv.sock"
+
 ## Python
 export PYTHONDONTWRITEBYTECODE=1
 alias pip="pip --disable-pip-version-check --require-virtualenv"

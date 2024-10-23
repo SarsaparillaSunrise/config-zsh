@@ -97,9 +97,11 @@ alias ls="LC_COLLATE=C ls --block-size=\'1 -A --color=auto -F --time-style=long-
 alias ll='ls -l'  # list all files, sorted alphabetically
 alias grep='grep --color=auto'
 alias rg='grep'  # No ripgrep on target machine
+alias nvim="vim"
 
 alias gd='git diff'
 alias gs='git status'
+
 
 ### Application Config:
 
